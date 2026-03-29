@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Stanza Blu</title>
+
+  <!-- Libreria Pannellum -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #1511ac;
+    }
+
+    #panorama {
+      width: 100%;
+      height: 100vh;
+    }
+
+    .word img {
+      width: 160px;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="panorama"></div>
+
+<script>
+pannellum.viewer('panorama', {
+    type: 'equirectangular',
+    panorama: 'sfondo.jpg',
+
+    autoLoad: true,
+    showControls: false,
+
+    hotSpots: [
+
+        { pitch: 10, yaw: 30, cssClass: 'word', createTooltipFunc: parola, createTooltipArgs: "parola1.png" },
+        { pitch: -5, yaw: 120, cssClass: 'word', createTooltipFunc: parola, createTooltipArgs: "parola2.png" },
+        { pitch: 15, yaw: -90, cssClass: 'word', createTooltipFunc: parola, createTooltipArgs: "parola3.png" },
+        { pitch: -20, yaw: -160, cssClass: 'word', createTooltipFunc: parola, createTooltipArgs: "parola4.png" }
+
+    ]
+});
+
+function parola(div, imgPath) {
+    var img = document.createElement("img");
+    img.src = imgPath;
+    div.appendChild(img);
+}
+</script>
+
+</body>
+</html>
