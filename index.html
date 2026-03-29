@@ -21,12 +21,29 @@
     }
 
     .word img {
-      width: 160px;
+      width: 300px;
       opacity: 0.9;
     }
   </style>
 </head>
+<button id="startGyro" style="position:fixed;top:20px;left:20px;z-index:999;padding:10px;background:white;border:none;">
+Attiva movimento
+</button>
 
+<script>
+document.getElementById("startGyro").addEventListener("click", function() {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+        .then(function(response) {
+            if (response === 'granted') {
+                pannellum.viewer('panorama').startOrientation();
+            }
+        });
+    } else {
+        pannellum.viewer('panorama').startOrientation();
+    }
+});
+</script>
 <body>
 
 <div id="panorama"></div>
