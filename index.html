@@ -43,6 +43,50 @@
 <div id="panorama"></div>
 
 <script>
+
+// ------------------------
+// 1. LISTA PAROLE
+// ------------------------
+
+var immagini = [
+  "parola1.png",
+  "parola2.png",
+  "parola3.png",
+  "parola4.png",
+  "parola5.png",
+  "parola6.png"
+];
+
+// ------------------------
+// 2. CREAZIONE AUTOMATICA
+// ------------------------
+
+var hotSpots = [];
+
+var righe = 3;
+var perRiga = Math.ceil(immagini.length / righe);
+
+for (let i = 0; i < immagini.length; i++) {
+
+    let riga = Math.floor(i / perRiga);
+    let posizioneNellaRiga = i % perRiga;
+
+    let pitch = 30 - (riga * 30); // alto, centro, basso
+    let yaw = posizioneNellaRiga * (360 / perRiga);
+
+    hotSpots.push({
+        pitch: pitch,
+        yaw: yaw,
+        cssClass: 'word',
+        createTooltipFunc: parola,
+        createTooltipArgs: immagini[i]
+    });
+}
+
+// ------------------------
+// 3. VIEWER
+// ------------------------
+
 var viewer = pannellum.viewer('panorama', {
     type: 'equirectangular',
     panorama: 'sfondo.jpg',
@@ -52,19 +96,22 @@ var viewer = pannellum.viewer('panorama', {
 
     hfov: 60,
 
-    hotSpots: [
-        { pitch: 5, yaw: 0, cssClass: 'word', createTooltipFunc: parola, createTooltipArgs: "parola1.png" },
-        { pitch: 0, yaw: 30, cssClass: 'word', createTooltipFunc: parola, createTooltipArgs: "parola2.png" },
-        { pitch: -5, yaw: -30, cssClass: 'word', createTooltipFunc: parola, createTooltipArgs: "parola3.png" },
-        { pitch: 10, yaw: 60, cssClass: 'word', createTooltipFunc: parola, createTooltipArgs: "parola4.png" }
-    ]
+    hotSpots: hotSpots
 });
+
+// ------------------------
+// 4. FUNZIONE PAROLA
+// ------------------------
 
 function parola(div, imgPath) {
     var img = document.createElement("img");
     img.src = imgPath;
     div.appendChild(img);
 }
+
+// ------------------------
+// 5. GIROSCOPIO
+// ------------------------
 
 document.getElementById("startGyro").addEventListener("click", function() {
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -78,6 +125,7 @@ document.getElementById("startGyro").addEventListener("click", function() {
         viewer.startOrientation();
     }
 });
+
 </script>
 
 </body>
