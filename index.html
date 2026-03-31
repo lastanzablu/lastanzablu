@@ -65,11 +65,11 @@ var hotSpots = [];
 
 for (let i = 0; i < immagini.length; i++) {
 
-    // distribuzione solo davanti (arco)
-    let yaw = -60 + (i * (120 / immagini.length));
+    // distribuzione casuale davanti
+    let yaw = -60 + Math.random() * 120;
 
-    // movimento ondulato naturale
-    let pitch = Math.sin(i * 0.7) * 25;
+    // distribuzione verticale casuale
+    let pitch = -30 + Math.random() * 60;
 
     hotSpots.push({
         pitch: pitch,
