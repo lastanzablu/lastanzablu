@@ -63,16 +63,13 @@ var immagini = [
 
 var hotSpots = [];
 
-var righe = 3;
-var perRiga = Math.ceil(immagini.length / righe);
-
 for (let i = 0; i < immagini.length; i++) {
 
-    let riga = Math.floor(i / perRiga);
-    let posizioneNellaRiga = i % perRiga;
+    // distribuzione solo davanti (arco)
+    let yaw = -60 + (i * (120 / immagini.length));
 
-    let pitch = 30 - (riga * 30); // alto, centro, basso
-    let yaw = posizioneNellaRiga * (360 / perRiga);
+    // movimento ondulato naturale
+    let pitch = Math.sin(i * 0.7) * 25;
 
     hotSpots.push({
         pitch: pitch,
